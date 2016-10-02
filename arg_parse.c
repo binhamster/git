@@ -55,11 +55,13 @@ char** arg_parse (char *line, int *argcp){
   int ai = 0; // args index
   
   char** args = (char **)malloc(sizeof(char *) * (*argcp + 1));
-  int src = 0, dst = 0;
+  int src = 0;
   while (line[li] != 0) {
     // Skip spaces
-    while (line[li] == ' ')
+    while (line[li] == ' '){
       li++;
+      src++;
+    }
 
     // Set pointer of args
     if (line[li] != 0){
@@ -71,40 +73,41 @@ char** arg_parse (char *line, int *argcp){
     while ( (line[li] != 0) && (line[li] != ' ') ){
       // see quotes, so now start skipping until another quote
       if (line[li] == '"'){
-        src = li; 
-        dst = li;
-        while (line[src] != 0){
-          if (line[src] != '"'){
-            line[dst] = line[src];
-            dst++;
+
+        while (line[li] != 0){
+          if (line[src] == '"'){
+            src++;
           }
+          //printf("src: %d, li: %d\n", src, li);
+          line[li] = line[src];
+          li++;
           src++;
+
         }
-        line[dst] = 0;
-        li = dst;
+        //line[li] = 0;
+
+
 
         // li++; // move to next char after first quote
-        // line[li - 1] = line[li];
-        // src = li;
 
         // while ( (line[li] != '"') && (line[li] != 0) ){
         //   li++;
-        //   line[dst] = line[src];
-        //   dst++;
         // }
         // // if another quote is not seen until EOL then uneven number of quotes
-        // if (line[li] == 0)
-        //   fprintf(stderr, "Uneven number of quotes\n");
-        // //li++; // move to next char after last quote
+        if (line[li] == 0)
+          fprintf(stderr, "Uneven number of quotes\n");
+        // li++; // move to next char after last quote
         
       } else{
         li++;
+        src++;
       }
     }
 
-    // zero out after command
+    // zero out after argument
     line[li] = 0;
     li++;
+    src++;
 
     if (line[li] == 0)
       args[ai] = NULL;
