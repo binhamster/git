@@ -1,0 +1,39 @@
+Script started on Wed 05 Oct 2016 06:01:45 PM PDT
+phamb@cf162-24:~/unix$ cc -g -Wall -o msh msh.c arg_parse.c builtin.c
+phamb@cf162-24:~/unix$ ./msh
+% echo "hello"
+hello
+% echo ""hello""
+hello
+% echo "hello       wjatsI["
+hello       wjatsI[
+% echo
+
+% 
+% 
+% echo "gah"a whats that"
+Unmatched quote
+% " " "
+Unmatched quote
+% aecho a b c d
+a b c d
+% aecho "a b" " "a            "b            "a"
+a b a            b a
+% aecho a                                  b
+a b
+% aecho -n a
+a% aecho -n
+% aecho -n
+% exit 1
+phamb@cf162-24:~/unix$ echo $?
+1
+phamb@cf162-24:~/unix$ echo
+
+phamb@cf162-24:~/unix$ ./msh
+% exit 127
+phamb@cf162-24:~/unix$ echo $?
+127
+phamb@cf162-24:~/unix$ exit
+exit
+
+Script done on Wed 05 Oct 2016 06:04:26 PM PDT

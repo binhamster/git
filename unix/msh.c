@@ -1,6 +1,8 @@
 /* CS 352 -- Mini Shell!  
 *
-*   Sept 27, 2016,  Binh Pham
+*   Binh Pham
+*   September 28, 2016
+*   Assignment 2
 *
 */
 
@@ -59,20 +61,24 @@ void processline (char *line)
   pid_t  cpid;
   int    status;
   int    argcp;
-  char** argv = arg_parse(line, &argcp);;
+  char** argv = arg_parse(line, &argcp);
+
+  /* Check if there was an error in proccessing */
+  if (argv == 0)
+    return;
 
   /* Start a new process to do the job. */
   cpid = fork();
   if (cpid < 0) {
     perror ("fork");
-    free(argv);
     return;
   }
 
   /* Check for who we are! */
   if (cpid == 0) {
     /* We are the child! */
-    execvp(line, argv);
+    execvp(argv[0], argv);
+    free(argv);
     perror ("exec");
     exit (127);
   }
