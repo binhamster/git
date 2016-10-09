@@ -10,7 +10,9 @@ public class Company{
 	ArrayList<Double> closePrice;
 	ArrayList<Integer> shares;
 	ArrayList<Double> adjustPrice;
-	HashMap<String, String> crazyDays;
+	HashMap<String, Double> crazyDays;
+	String craziestDay;
+	Double highestPerc;
 
 	public Company(String name){
 		this.name = name;
@@ -21,7 +23,7 @@ public class Company{
 		this.closePrice = new ArrayList<Double>();
 		this.shares = new ArrayList<Integer>();
 		this.adjustPrice = new ArrayList<Double>();
-		this.crazyDays = new HashMap<String, String>();
+		this.crazyDays = new HashMap<String, Double>();
 	}
 
 	public void setDate(String date){
@@ -81,12 +83,13 @@ public class Company{
 	}
 
 	public void setCD(String date, double perc){
-		double n = (double) Math.round(perc * 100) / 100;
-		n = n * 100;
-		(this.crazyDays).put(date, n + "%");
+		//int n = (int) Math.round(perc * 100);
+		(this.crazyDays).put(date, perc);
 	}
 
-	public String getCD(String date){
-		return (this.crazyDays).get(date);
+	public void setCraziest(String date, double perc){
+		this.craziestDay = date;
+		this.highestPerc = perc;
 	}
+
 }

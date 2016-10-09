@@ -17,15 +17,18 @@ public class A1 {
 		for (String key : compList.keySet()){
 			calcCrazyDay(compList.get(key));
 
+			Company comp = compList.get(key);
+			for (String k : comp.crazyDays.keySet()){
+				System.out.print("Company: " + key + " ");
+				System.out.print("Date: " + k);
+				System.out.print(" Percent: " + comp.crazyDays.get(k) + "\n");
+			}
 
-		}
+			String d = comp.craziestDay;
+			double n = comp.highestPerc;
+			System.out.println("craziest day: " + d + " highest perc: " + n);
 
 
-		Company comp = compList.get("AAPL");
-		System.out.println(comp.crazyDays.size());
-		for (String k : comp.crazyDays.keySet()){
-			System.out.print("Date: " + k);
-			System.out.print(" Percent: " + comp.crazyDays.get(k) + "\n");
 		}
 
 
@@ -63,6 +66,18 @@ public class A1 {
 				comp.setCD(comp.getDate(i), p);
 			}
 		}
+
+		double n = 0;
+		String d = "";
+		HashMap<String, Double> crazyDays = comp.crazyDays;
+		for (String key : crazyDays.keySet()){
+			double temp = crazyDays.get(key);
+			if (temp > n){
+				n = temp;
+				d = key;
+			}
+		}
+		comp.setCraziest(d, n);
 	}
 
 } 
