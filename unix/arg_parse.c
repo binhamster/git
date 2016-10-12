@@ -1,3 +1,4 @@
+/*    $Id: arg_parse.c,v 1.2 2016/10/11 20:15:15 phamb Exp $    */
 #include "proto.h"
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +27,8 @@ static int count_args (char *line)
 
         if (line[li] == 0)
           return -1; /* Odd number of quotes */
-        li++; /* Skip last quote */
+        else if (line[li] == '"')
+          li++; /* Skip last quote */
 
       } else {
         li++;
@@ -83,7 +85,9 @@ char** arg_parse (char *line, int *argcp)
         li++; /* Skip first quote */
         while ((line[li] != '"') && (line[li] != 0))
           li++;
-        li++; /* Skip last quote */
+
+        if (line[li] == '"')
+          li++; /* Skip last quote */
 
       } else {
         li++;

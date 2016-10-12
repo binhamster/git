@@ -1,8 +1,9 @@
+/*    $Id: msh.c,v 1.4 2016/10/12 03:55:20 phamb Exp $    */
 /* CS 352 -- Mini Shell!  
 *
 *   Binh Pham
-*   September 28, 2016
-*   Assignment 2
+*   October 11, 2016
+*   Assignment 3
 *
 */
 
@@ -63,6 +64,11 @@ void processline (char *line)
   int    argcp;
   char** argv = arg_parse(line, &argcp);
 
+  //char orig[100];
+  char new[100];
+  int e = expand(line, new, 100);
+  e = e + 1;
+
   /* Check if there was an error in proccessing */
   if (argv == 0)
     return;
@@ -78,7 +84,6 @@ void processline (char *line)
   if (cpid == 0) {
     /* We are the child! */
     execvp(argv[0], argv);
-    free(argv);
     perror ("exec");
     exit (127);
   }

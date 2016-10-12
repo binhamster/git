@@ -13,6 +13,9 @@ public class Company{
 	HashMap<String, Double> crazyDays;
 	String craziestDay;
 	Double highestPerc;
+	ArrayList<String> split21;
+	ArrayList<String> split31;
+	ArrayList<String> split32;
 
 	public Company(String name){
 		this.name = name;
@@ -24,6 +27,9 @@ public class Company{
 		this.shares = new ArrayList<Integer>();
 		this.adjustPrice = new ArrayList<Double>();
 		this.crazyDays = new HashMap<String, Double>();
+		this.split21 = new ArrayList<String>();
+		this.split31 = new ArrayList<String>();
+		this.split32 = new ArrayList<String>();
 	}
 
 	public void setDate(String date){
@@ -90,6 +96,19 @@ public class Company{
 	public void setCraziest(String date, double perc){
 		this.craziestDay = date;
 		this.highestPerc = perc;
+	}
+
+	public int getNumDays(){
+		return (this.date).size();
+	}
+
+	public void setSplit(String type, String date){
+		if (type == "2-1")
+			(this.split21).add(date);
+		else if (type == "3-1")
+			(this.split31).add(date);
+		else if (type == "3-2")
+			(this.split32).add(date);
 	}
 
 }
