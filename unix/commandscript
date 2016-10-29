@@ -1,0 +1,21 @@
+Script started on Tue 18 Oct 2016 01:05:04 PM PDT
+phamb@cf414-10:~/work352/msh$ mkdir newdir
+phamb@cf414-10:~/work352/msh$ cd newdir
+phamb@cf414-10:~/work352/msh/newdir$ cvs -d /home/phamb/cs352f16/CVSrep get -rAS SIGNMENT-3 msh
+cvs checkout: Updating msh
+U msh/Makefile
+U msh/arg_parse.c
+U msh/builtin.c
+U msh/expansion.c
+U msh/msh
+U msh/msh.c
+U msh/proto.h
+phamb@cf414-10:~/work352/msh/newdir$ cd msh
+phamb@cf414-10:~/work352/msh/newdir/msh$ ./msh
+% make clean
+rm -rf msh msh.o arg_parse.o builtin.o expansion.o
+% exit
+phamb@cf414-10:~/work352/msh/newdir/msh$ exit
+exit
+
+Script done on Tue 18 Oct 2016 01:05:56 PM PDT

@@ -1,8 +1,18 @@
-/*    $Id: arg_parse.c,v 1.2 2016/10/11 20:15:15 phamb Exp $    */
-#include "proto.h"
+/*    $Id: arg_parse.c,v 1.6 2016/10/22 23:19:46 phamb Exp $    */
+/* CS 352 -- Mini Shell!  
+*
+*   Binh Pham
+*   October 19, 2016
+*   Assignment 4
+*
+*/
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+/* Prototypes */
+static int count_args (char *line);
+char** arg_parse (char *line, int *argcp);
 
 static int count_args (char *line)
 {
@@ -29,7 +39,6 @@ static int count_args (char *line)
           return -1; /* Odd number of quotes */
         else if (line[li] == '"')
           li++; /* Skip last quote */
-
       } else {
         li++;
       }
@@ -49,7 +58,7 @@ char** arg_parse (char *line, int *argcp)
 
   /* Check if there is an unmatched quote */
   if (*argcp == -1) {
-    fprintf(stderr, "Unmatched quote\n");
+    fprintf(stderr, "Unmatched quote \"\n");
     return 0;
   }
 
@@ -92,7 +101,6 @@ char** arg_parse (char *line, int *argcp)
       } else {
         li++;
       }
-
     }
 
     /* Zero out after argument */
@@ -114,10 +122,6 @@ char** arg_parse (char *line, int *argcp)
     if (line[li] == 0)
       args[ai] = NULL;
   }
-
-  /* Check if the command was a built in */
-  if (check_builtin(args, *argcp))
-    return 0;
 
   return args; 
 }

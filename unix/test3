@@ -1,0 +1,24 @@
+echo Testing shift ...
+echo Script name is $0.
+echo There are $# number of parameters.
+echo Dollar 1-4 is $1, $2, $3, and $4.
+echo Shifting 1
+shift
+echo There are $# number of parameters.
+echo Dollar 1-4 is $1, $2, $3, and $4.
+echo Shifting 2
+shift 2
+echo There are $# number of parameters.
+echo Dollar 1-4 is $1, $2, $3, and $4.
+echo Shifting 4
+shift 4
+echo There are $# number of parameters.
+unshift 1
+echo There are $# number of parameters.
+echo Dollar 1-2 is $1 and $2.
+unshift 2
+echo There are $# number of parameters.
+echo Dollar 1-4 is $1, $2, $3, and $4.
+unshift
+echo There are $# number of parameters.
+echo Dollar 1-4 is $1, $2, $3, and $4.

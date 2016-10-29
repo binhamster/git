@@ -1,12 +1,12 @@
-/*    $Id: msh.c,v 1.4 2016/10/12 03:55:20 phamb Exp $    */
+/*    $Id: msh.c,v 1.13 2016/10/27 00:58:08 phamb Exp $    */
 /* CS 352 -- Mini Shell!  
 *
 *   Binh Pham
-*   October 11, 2016
-*   Assignment 3
+*   October 19, 2016
+*   Assignment 4
 *
 */
-
+#define MAIN
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -15,6 +15,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "proto.h"
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "global.h"
 
 
 /* Constants */ 
@@ -28,16 +31,34 @@ void processline (char *line);
 /* Shell main */
 
 int
-main (void)
+main (int argc, char** argv)
 {
   char   buffer [LINELEN];
   int    len;
+  FILE   *fp;
+  int    fd; 
+  
+  paraArgc = argc;
+  paraArgv = argv;
+
+  if (argc > 1) {
+    if ((fd = open(argv[1], O_RDONLY)) == -1) {
+      perror("open");
+      exit(127);
+    } 
+    if ((fp = fdopen(open(argv[1], O_RDONLY), "r")) == NULL)
+      perror("fdopen");
+  } else
+    fp = stdin;
+
 
   while (1) {
 
     /* prompt and get line */
-    fprintf (stderr, "%% ");
-    if (fgets (buffer, LINELEN, stdin) != buffer)
+    if (argc == 1)
+      fprintf (stderr, "%% ");
+
+    if (fgets(buffer, LINELEN, fp) != buffer)
       break;
 
     /* Get rid of \n at end of buffer. */
@@ -50,7 +71,7 @@ main (void)
 
   }
 
-  if (!feof(stdin))
+  if (!feof(fp))
     perror ("read");
 
   return 0;		/* Also known as exit (0); */
@@ -62,15 +83,20 @@ void processline (char *line)
   pid_t  cpid;
   int    status;
   int    argcp;
-  char** argv = arg_parse(line, &argcp);
+  char** argv; 
+  char   new[LINELEN];
+  int    ret;
 
-  //char orig[100];
-  char new[100];
-  int e = expand(line, new, 100);
-  e = e + 1;
+  /* Check if there was an error in expand */
+  if ((ret = expand(line, new, LINELEN)) == 0) 
+    return;
 
   /* Check if there was an error in proccessing */
-  if (argv == 0)
+  if ((argv = arg_parse(new, &argcp)) == 0)
+    return;
+
+  /* Check if the command was a built in */
+  if (check_builtin(argv, argcp))
     return;
 
   /* Start a new process to do the job. */
@@ -85,6 +111,7 @@ void processline (char *line)
     /* We are the child! */
     execvp(argv[0], argv);
     perror ("exec");
+    fclose(stdin);
     exit (127);
   }
 
@@ -92,12 +119,7 @@ void processline (char *line)
   if (wait (&status) < 0)
     perror ("wait");
   free(argv);
+
+  if(WIFEXITED(status))
+    exitGlobal = WEXITSTATUS(status);
 }
-
-
-
-
-
-
-
-
