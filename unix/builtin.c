@@ -142,7 +142,7 @@ void bi_shift(char **argv, int argc)
       dprintf(2, "Cannot shift with n = %d\n", atoi(argv[1]));
       exitGlobal = 1;
     } else
-      shiftn = atoi(argv[1]);
+      shiftn = shiftn + atoi(argv[1]);
   } else
     shiftn++;
 }
