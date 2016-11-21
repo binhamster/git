@@ -60,7 +60,7 @@ public class a3 {
 			
 			while (tickers.next()) {
 				aTicker = tickers.getString("Ticker");
-				System.out.printf("%s\n", aTicker);
+				System.out.printf("%s\n\r", aTicker);
 				adjpv = getAdjPV(aTicker);
 				basket.put(aTicker, adjpv);
 			}
