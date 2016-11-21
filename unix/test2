@@ -1,4 +1,0 @@
-./msh ${TOP1}/scr2 a b c d e f g h </dev/null
-
-
-scr2 a b c d e f g h 
