@@ -78,7 +78,7 @@ public class PriceVolume{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date mainDate = null;
 		Date lastDate = null;
-		int i = transDates.size();
+		int i = transDates.size()-1;
 		try {
 			mainDate = sdf.parse(date);
 			lastDate = sdf.parse(this.transDates.get(i));
