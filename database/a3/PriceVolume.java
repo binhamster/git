@@ -87,6 +87,7 @@ public class PriceVolume{
 		if (this.transDates.contains(date)) {
 			return transDates.indexOf(date);
 		} else {
+			System.out.println("hello");
 			while(lastDate.after(mainDate)) {
 				i--;
 				try {
