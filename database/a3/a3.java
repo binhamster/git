@@ -102,29 +102,29 @@ public class a3 {
 		Double tickerReturn;
 		Double industryReturn = 0.0;
 		for (String key : basket.keySet()) {
-			// System.out.println(key + ":");
-			// aComp = basket.get(key);
-			// int s = aComp.indexOf(sDate);
-			// int e = aComp.indexOf(eDate);
+			System.out.println(key + ":");
+			aComp = basket.get(key);
+			int s = aComp.indexOf(sDate);
+			int e = aComp.indexOf(eDate);
 
-			// for (String inKey : basket.keySet()) {
-			// 	if (!key.equals(inKey)) {
-			// 		inComp = basket.get(inKey);
-			// 		int a = inComp.getFirstDay(sDate);
-			// 		int b = inComp.getLastDay(eDate);
-			// 		System.out.print(inComp.getDate(a) + " " + inComp.getDate(b) + " ");
-			// 		System.out.print(sDate + " " + eDate + "\n");
-			// 		//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
-			// 		industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
+			for (String inKey : basket.keySet()) {
+				if (!key.equals(inKey)) {
+					inComp = basket.get(inKey);
+					int a = inComp.getFirstDay(sDate);
+					int b = inComp.getLastDay(eDate);
+					System.out.print(inComp.getDate(a) + " " + inComp.getDate(b) + " ");
+					System.out.print(sDate + " " + eDate + "\n");
+					//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
+					industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
 
-			// 		//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-			// 		//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
+					//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
+					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
-			// 	}
-			// }
-			// industryReturn = industryReturn * (1.0/6.0);
-			// System.out.printf("%10.7f\n", industryReturn);
-			// industryReturn = 0.0;
+				}
+			}
+			industryReturn = industryReturn * (1.0/6.0);
+			System.out.printf("%10.7f\n", industryReturn);
+			industryReturn = 0.0;
 
 
 
@@ -147,17 +147,17 @@ public class a3 {
 			// 		tickerReturn);
 			// }
 
-			try{
-			    PrintWriter writer = new PrintWriter(key+"splits", "UTF-8");
+			// try{
+			//     PrintWriter writer = new PrintWriter(key+"splits", "UTF-8");
 
-			    for (int i = 0; i < adjpv.getNumDays(); i++) {
-			    	writer.printf("%s Open: %.2f Close: %.2f\n", 
-			    		adjpv.getDate(i),
-			    		adjpv.getOP(i),
-			    		adjpv.getCP(i));
-			    }
-			    writer.close();
-			} catch (Exception e) {}
+			//     for (int i = 0; i < adjpv.getNumDays(); i++) {
+			//     	writer.printf("%s Open: %.2f Close: %.2f\n", 
+			//     		adjpv.getDate(i),
+			//     		adjpv.getOP(i),
+			//     		adjpv.getCP(i));
+			//     }
+			//     writer.close();
+			// } catch (Exception e) {}
 		}		
 		//writer.close();
 
