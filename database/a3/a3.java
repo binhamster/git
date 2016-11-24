@@ -110,9 +110,9 @@ public class a3 {
 			for (String inKey : basket.keySet()) {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
-					//int a = inComp.getFirstDay(sDate, s);
-					//int b = inComp.getLastDay(eDate, e);
-					//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
+					int a = inComp.getFirstDay(sDate, s);
+					int b = inComp.getLastDay(eDate, e);
+					System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
 					//industryReturn = industryReturn + inComp.getCP(b) / inComp.getOP(a) - 1;
 
 					industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
