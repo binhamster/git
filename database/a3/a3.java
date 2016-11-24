@@ -136,7 +136,7 @@ public class a3 {
 			// }
 			System.out.println("start: " + s);
 			System.out.println("end: " + e);
-			for (int i = s; i < e; i = i + 60){
+			for (int i = s; i < e - (e-s)%60; i = i + 60){
 				System.out.println(i);
 				tickerReturn = aComp.getCP(i+59) / aComp.getOP(i) - 1;
 				writer.printf("%s  %s  %s  %10.7f\n",
