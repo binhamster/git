@@ -111,9 +111,9 @@ public class a3 {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
 					int a = inComp.getFirstDay(sDate);
-					int b = inComp.getLastDay(eDate);
+					int b = inComp.getLastDay(aComp.getDate(s+59));
 					System.out.print(inComp.getDate(a) + " " + inComp.getDate(b) + " ");
-					System.out.print(sDate + " " + eDate + "\n");
+					System.out.print(sDate + " " + aComp.getDate(s+59) + "\n");
 					//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
 					industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
 
@@ -122,7 +122,7 @@ public class a3 {
 
 				}
 			}
-			industryReturn = industryReturn * (1.0/6.0);
+			industryReturn = industryReturn * (1.0/6.0)-1;
 			System.out.printf("%10.7f\n", industryReturn);
 			industryReturn = 0.0;
 
