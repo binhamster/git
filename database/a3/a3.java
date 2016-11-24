@@ -111,14 +111,13 @@ public class a3 {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
 					industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-					System.out.println(industryReturn);
 					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
 				}
-				industryReturn = industryReturn * (1/6);
-				industryReturn = 0.0;
-				System.out.println(industryReturn);
 			}
+			industryReturn = industryReturn * (1/6);
+			System.out.println(industryReturn);
+			industryReturn = 0.0;
 
 
 
