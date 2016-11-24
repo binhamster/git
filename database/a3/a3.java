@@ -50,162 +50,113 @@ public class a3 {
 			"group by Ticker " +
 			"order by Ticker ASC");
 
-		PrintWriter writer = null;
-		try{
-		    writer = new PrintWriter("finalOutput", "UTF-8");
-		    writer.println("Industry:  Ticker:  StartDate:  EndDate:  TickerReturn:  IndustryReturn:");
-		} catch (Exception e) {}
-
-		while (industries.next()) {
-			anIndustry = industries.getString("Industry");
-			System.out.printf("Processing %s: \n", anIndustry);
-
-			// Get Date Range 
-			getDates.setString(1, anIndustry);
-			dateRange = getDates.executeQuery();
-			dateRange.next();
-			sDate = dateRange.getString(1);
-			eDate = dateRange.getString(2); 
-			System.out.printf("%s - %s\n", sDate, eDate);
-
-			// Set up basket of companies for an industry
-			getTickers.setString(1, anIndustry);
-			tickers = getTickers.executeQuery();
-			while (tickers.next()) {
-				aTicker = tickers.getString("Ticker");
-				adjpv = getAdjPV(aTicker);
-				basket.put(aTicker, adjpv);
-				m = m + 1.0;
-			}
-
-			for (String outKey : basket.keySet()) {
-				System.out.print("Calculating: ");
-				System.out.printf("%s     \r", outKey);
-				outComp = basket.get(outKey);
-				int s = outComp.indexOf(sDate);
-				int e = outComp.indexOf(eDate);
-
-				for (int i = s; i < e - (e-s)%60; i = i + 60){
-					// Ticker Return Calculation
-					tickerReturn = outComp.getCP(i+59) / outComp.getOP(i) - 1;
-					
-					// Industry Return Calculation
-					for (String inKey : basket.keySet()) {
-						if (!outKey.equals(inKey)) {
-							inComp = basket.get(inKey);
-							int a = inComp.getFirstDay(sDate);
-							int b = inComp.getLastDay(outComp.getDate(i+59));
-							industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
-						}
-					}
-					industryReturn = industryReturn * (1.0/(m-1.0))-1.0;
-					writer.printf("%s  %s  %s  %s  %10.7f %10.7f\n",
-						anIndustry, outKey, sDate, eDate, tickerReturn, industryReturn);
-					industryReturn = 0.0;
-				}
-
-			}	
-
-		}
-		writer.close();
-
-		// getDates.setString(1, "Telecommunications Services");
-		// dateRange = getDates.executeQuery();
-		// dateRange.next();
-		// sDate = dateRange.getString(1);
-		// eDate = dateRange.getString(2);
-
-		// getTickers.setString(1, "Telecommunications Services");
-		// tickers = getTickers.executeQuery();
-		// while (tickers.next()) {
-		// 	aTicker = tickers.getString("Ticker");
-		// 	adjpv = getAdjPV(aTicker);
-		// 	basket.put(aTicker, adjpv);
-		// }
-
 		// PrintWriter writer = null;
 		// try{
-		//     writer = new PrintWriter("tickerReturn", "UTF-8");
+		//     writer = new PrintWriter("finalOutput", "UTF-8");
+		//     writer.println("Industry:  Ticker:  StartDate:  EndDate:  TickerReturn:  IndustryReturn:");
 		// } catch (Exception e) {}
 
-		// PriceVolume outComp;
-		// PriceVolume inComp;
-		// Double tickerReturn;
-		// Double industryReturn;
-		// for (String outKey : basket.keySet()) {
-		// 	System.out.println(outKey + ":");
-		// 	outComp = basket.get(outKey);
-		// 	int s = outComp.indexOf(sDate);
-		// 	int e = outComp.indexOf(eDate);
+		// while (industries.next()) {
+		// 	anIndustry = industries.getString("Industry");
+		// 	System.out.printf("Processing %s: \n", anIndustry);
 
-		// 	for (String inKey : basket.keySet()) {
-		// 		if (!outKey.equals(inKey)) {
-		// 			inComp = basket.get(inKey);
-		// 			int a = inComp.getFirstDay(sDate);
-		// 			int b = inComp.getLastDay(outComp.getDate(s+59));
-		// 			//System.out.print(inComp.getDate(a) + " " + inComp.getDate(b) + " ");
-		// 			//System.out.print(sDate + " " + aComp.getDate(s+59) + "\n");
-		// 			//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
-		// 			industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
+		// 	// Get Date Range 
+		// 	getDates.setString(1, anIndustry);
+		// 	dateRange = getDates.executeQuery();
+		// 	dateRange.next();
+		// 	sDate = dateRange.getString(1);
+		// 	eDate = dateRange.getString(2); 
+		// 	System.out.printf("%s - %s\n", sDate, eDate);
 
-		// 			//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-		// 			//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
-
-		// 		}
+		// 	// Set up basket of companies for an industry
+		// 	getTickers.setString(1, anIndustry);
+		// 	tickers = getTickers.executeQuery();
+		// 	while (tickers.next()) {
+		// 		aTicker = tickers.getString("Ticker");
+		// 		adjpv = getAdjPV(aTicker);
+		// 		basket.put(aTicker, adjpv);
+		// 		m = m + 1.0;
 		// 	}
-		// 	industryReturn = industryReturn * (1.0/6.0)-1;
-		// 	System.out.printf("%10.7f\n", industryReturn);
-		// 	industryReturn = 0.0;
+
+		// 	for (String outKey : basket.keySet()) {
+		// 		System.out.print("Calculating: ");
+		// 		System.out.printf("%s     \r", outKey);
+		// 		outComp = basket.get(outKey);
+		// 		int s = outComp.indexOf(sDate);
+		// 		int e = outComp.indexOf(eDate);
+
+		// 		for (int i = s; i < e - (e-s)%60; i = i + 60){
+		// 			// Ticker Return Calculation
+		// 			tickerReturn = outComp.getCP(i+59) / outComp.getOP(i) - 1;
+					
+		// 			// Industry Return Calculation
+		// 			for (String inKey : basket.keySet()) {
+		// 				if (!outKey.equals(inKey)) {
+		// 					inComp = basket.get(inKey);
+		// 					int a = inComp.getFirstDay(sDate);
+		// 					int b = inComp.getLastDay(outComp.getDate(i+59));
+		// 					industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
+		// 				}
+		// 			}
+		// 			industryReturn = industryReturn * (1.0/(m-1.0))-1.0;
+		// 			writer.printf("%s  %s  %s  %s  %10.7f %10.7f\n",
+		// 				anIndustry, outKey, sDate, eDate, tickerReturn, industryReturn);
+		// 			industryReturn = 0.0;
+		// 		}
+
+		// 	}	
+
+		// }
+		// writer.close();
+
+		getDates.setString(1, "Consumer Staples");
+		dateRange = getDates.executeQuery();
+		dateRange.next();
+		sDate = dateRange.getString(1);
+		eDate = dateRange.getString(2);
+
+		getTickers.setString(1, "Consumer Staples");
+		tickers = getTickers.executeQuery();
+		while (tickers.next()) {
+			aTicker = tickers.getString("Ticker");
+			adjpv = getAdjPV(aTicker);
+			basket.put(aTicker, adjpv);
+			m = m + 1.0;
+		}
+
+		PrintWriter writer = null;
+		try{
+		    writer = new PrintWriter("tickerReturn", "UTF-8");
+		} catch (Exception e) {}
+
+		for (String outKey : basket.keySet()) {
+			System.out.print("Calculating: ");
+			System.out.printf("%s     \r", outKey);
+			outComp = basket.get(outKey);
+			int s = outComp.indexOf(sDate);
+			int e = outComp.indexOf(eDate);
+
+			for (int i = s; i < e - (e-s)%60; i = i + 60){
+				tickerReturn = outComp.getCP(i+59) / outComp.getOP(i) - 1;
+
+				for (String inKey : basket.keySet()) {
+					if (!outKey.equals(inKey)) {
+						inComp = basket.get(inKey);
+						int a = inComp.getFirstDay(sDate);
+						int b = inComp.getLastDay(outComp.getDate(i+59));
+						industryReturn = industryReturn + (inComp.getCP(b) / inComp.getOP(a));
+					}
+				}
+				industryReturn = industryReturn * (1.0/(m-1.0))-1;
+				writer.printf("%s  %s  %s  %10.7f %10.7f\n",
+					outKey, sDate, eDate, tickerReturn, industryReturn);
+				industryReturn = 0.0;
+			}
+
+		}		
+		writer.close();
 
 
-
-			// for (int i = s; i > s%60; i = i - 60){
-			// 	tickerReturn = aComp.getCP(i-59) / aComp.getOP(i) - 1;
-			// 	writer.printf("%s  %s  %s  %10.7f\n",
-			// 		key,
-			// 		aComp.getDate(i),
-			// 		aComp.getDate(i-59),
-			// 		tickerReturn);
-			// }
-
-			// for (int i = s; i < e - (e-s)%60; i = i + 60){
-			// 	System.out.println(i);
-			// 	tickerReturn = aComp.getCP(i+59) / aComp.getOP(i) - 1;
-			// 	writer.printf("%s  %s  %s  %10.7f\n",
-			// 		key,
-			// 		aComp.getDate(i),
-			// 		aComp.getDate(i+59),
-			// 		tickerReturn);
-			// }
-
-			// try{
-			//     PrintWriter writer = new PrintWriter(key+"splits", "UTF-8");
-
-			//     for (int i = 0; i < adjpv.getNumDays(); i++) {
-			//     	writer.printf("%s Open: %.2f Close: %.2f\n", 
-			//     		adjpv.getDate(i),
-			//     		adjpv.getOP(i),
-			//     		adjpv.getCP(i));
-			//     }
-			//     writer.close();
-			// } catch (Exception e) {}
-		//}		
-		//writer.close();
-
-
-
-
-		// try{
-		//     PrintWriter writer = new PrintWriter("a3splits", "UTF-8");
-
-		//     for (int i = 0; i < adjpv.getNumDays(); i++) {
-		//     	writer.printf("%s Open: %.2f Close: %.2f\n", 
-		//     		adjpv.getDate(i),
-		//     		adjpv.getOP(i),
-		//     		adjpv.getCP(i));
-		//     }
-		//     writer.close();
-		// } catch (Exception e) {}
 
 
 
