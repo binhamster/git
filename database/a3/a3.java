@@ -115,7 +115,7 @@ public class a3 {
 
 				}
 			}
-			industryReturn = industryReturn * (1/6);
+			//industryReturn = industryReturn * (1/6);
 			System.out.printf("%10.7f\n", industryReturn);
 			industryReturn = 0.0;
 
