@@ -98,29 +98,37 @@ public class a3 {
 		} catch (Exception e) {}
 
 		PriceVolume aComp;
+		PriceVolume inComp;
 		Double tickerReturn;
+		Double industryReturn = 0.0;
 		for (String key : basket.keySet()) {
 			System.out.println(key + ":");
 			aComp = basket.get(key);
 			int s = aComp.indexOf(sDate);
 			int e = aComp.indexOf(eDate);
 
+			for (String inKey : basket.keySet()) {
+				if (!key.equals(inKey)) {
+					inComp = basket.get(inKey);
 
-			// tickerReturn = aComp.getCP(s - 59) / aComp.getOP(s) - 1;
-			// System.out.printf("%10.7f\n", tickerReturn);
-			// tickerReturn = aComp.getCP(s - 59 - 60) / aComp.getOP(s - 60) - 1;
-			// System.out.printf("%10.7f\n", tickerReturn);
+					industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
+					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
-
-
-			for (int i = s; i > s%60; i = i - 60){
-				tickerReturn = aComp.getCP(i-59) / aComp.getOP(i) - 1;
-				writer.printf("%s  %s  %s  %10.7f\n",
-					key,
-					aComp.getDate(i),
-					aComp.getDate(i-59),
-					tickerReturn);
+				}
+				industryReturn = industryReturn * (1/6);
+				System.out.println(industryReturn);
 			}
+
+
+
+			// for (int i = s; i > s%60; i = i - 60){
+			// 	tickerReturn = aComp.getCP(i-59) / aComp.getOP(i) - 1;
+			// 	writer.printf("%s  %s  %s  %10.7f\n",
+			// 		key,
+			// 		aComp.getDate(i),
+			// 		aComp.getDate(i-59),
+			// 		tickerReturn);
+			// }
 		}		
 		writer.close();
 
