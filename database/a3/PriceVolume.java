@@ -51,61 +51,50 @@ public class PriceVolume{
 		return (this.transDates).indexOf(date);
 	}
 
-	public Integer getFirstDay(String date, Integer s){
+	public Integer getFirstDay(String date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date mainDate = null;
 		Date firstDate = null;
+		int i = 0;
 		try {
 			mainDate = sdf.parse(date);
-			firstDate = sdf.parse(this.transDates.get(s));
+			firstDate = sdf.parse(this.transDates.get(i));
 		} catch (ParseException ex){};
 
 		if (this.transDates.contains(date)) {
 			return transDates.indexOf(date);
 		} else {
-			if (firstDate.after(mainDate)) {
-				s = s - 5;
-				try {
-					firstDate = sdf.parse(this.transDates.get(s));
-				} catch (ParseException ex){};
-			}
 			while(firstDate.before(mainDate)) {
-				s++;
+				i++;
 				try {
-					firstDate = sdf.parse(this.transDates.get(s));
+					firstDate = sdf.parse(this.transDates.get(i));
 				} catch (ParseException ex){};
 			}
 		}
-		return s;
+		return i;
 	}
 
-	public Integer getLastDay(String date, Integer e){
+	public Integer getLastDay(String date){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date mainDate = null;
 		Date lastDate = null;
+		int i = transDates.size();
 		try {
 			mainDate = sdf.parse(date);
-			lastDate = sdf.parse(this.transDates.get(e));
+			lastDate = sdf.parse(this.transDates.get(i));
 		} catch (ParseException ex){};
 
 		if (this.transDates.contains(date)) {
 			return transDates.indexOf(date);
 		} else {
-			if (lastDate.before(mainDate)) {
-				e = e + 5;
-				try {
-					lastDate = sdf.parse(this.transDates.get(e));
-				} catch (ParseException ex){};
-			} 
-
 			while(lastDate.after(mainDate)) {
-				e--;
+				i--;
 				try {
-					lastDate = sdf.parse(this.transDates.get(e));
+					lastDate = sdf.parse(this.transDates.get(i));
 				} catch (ParseException ex){};
 			}
 
 		}
-		return e;
+		return i;
 	}
 }
