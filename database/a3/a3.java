@@ -126,7 +126,7 @@ public class a3 {
 
 		PrintWriter writer = null;
 		try{
-		    writer = new PrintWriter("tickerReturn", "UTF-8");
+		    writer = new PrintWriter("testOutput", "UTF-8");
 		} catch (Exception e) {}
 
 		for (String outKey : basket.keySet()) {
