@@ -1,20 +1,17 @@
 import java.util.*;
 import java.lang.*;
+import java.text.*;
 
 public class PriceVolume{
 	String ticker;
 	LinkedList<String> transDates;
 	LinkedList<Double> openPrice;
-	LinkedList<Double> highPrice;
-	LinkedList<Double> lowPrice;
 	LinkedList<Double> closePrice;
 
 	public PriceVolume(String name){
 		this.ticker = ticker;
 		this.transDates = new LinkedList<String>();
 		this.openPrice = new LinkedList<Double>();
-		this.highPrice = new LinkedList<Double>();
-		this.lowPrice = new LinkedList<Double>();
 		this.closePrice = new LinkedList<Double>();
 	}
 
@@ -38,22 +35,6 @@ public class PriceVolume{
 		return (this.openPrice).get(i);
 	}
 
-	public void setHP(double p){
-		(this.highPrice).add(p);
-	}
-
-	public double getHP(int i){
-		return (this.highPrice).get(i);
-	}
-
-	public void setLP(double p){
-		(this.lowPrice).add(p);
-	}
-
-	public double getLP(int i){
-		return (this.lowPrice).get(i);
-	}
-
 	public void setCP(double p){
 		(this.closePrice).add(p);
 	}
@@ -70,7 +51,61 @@ public class PriceVolume{
 		return (this.transDates).indexOf(date);
 	}
 
-	public Integer getFirstDay(Integer s){
-		return 0;
+	public Integer getFirstDay(String mainDate, Integer s){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		Date mDate = null;
+		Date firstDate = null;
+		try {
+			mDate = sdf.parse(mainDate);
+			firstDate = sdf.parse(this.transDates.get(s));
+		} catch (ParseExeception ex){};
+
+		if (this.transDates.contains(mainDate)) {
+			return transDates.indexOf(mainDate);
+		} else {
+			if (firstDate.after(mDate)) {
+				s = s + 5;
+				try {
+					firstDate = sdf.parse(this.transDates.get(s));
+				} catch (ParseExeception ex){};
+			}
+			while(firstDate.before(mDate)) {
+				s--;
+				try {
+					firstDate = sdf.parse(this.transDates.get(s));
+				} catch (ParseExeception ex){};
+			}
+		}
+		return s;
+	}
+
+	public Integer getLastDay(String mainDate, Integer e){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+		Date mDate = null;
+		Date lastDate = null;
+		try {
+			mDate = sdf.parse(mainDate);
+			lastDate = sdf.parse(this.transDates.get(e));
+		} catch (ParseExeception ex){};
+
+		if (this.transDates.contains(mainDate)) {
+			return transDates.indexOf(mainDate);
+		} else {
+			if (lastDate.before(mDate)) {
+				s = s - 5;
+				try {
+					lastDate = sdf.parse(this.transDates.get(s));
+				} catch (ParseExeception ex){};
+			} 
+
+			while(lastDate.after(mDate)) {
+				s++;
+				try {
+					lastDate = sdf.parse(this.transDates.get(s));
+				} catch (ParseExeception ex){};
+			}
+
+		}
+		return s;
 	}
 }

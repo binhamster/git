@@ -5,7 +5,7 @@ import java.text.*;
 
 public class Assignment2 {
 	static Connection conn = null;
-	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");;
+	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
 	public static void main (String[] args) throws Exception {
 		connectSQL();

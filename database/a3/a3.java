@@ -110,8 +110,12 @@ public class a3 {
 			for (String inKey : basket.keySet()) {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
+					int a = inComp.getFirstDay(sDate, s);
+					int b = inComp.getLastDay(eDate, e);
+					industryReturn = industryReturn + inComp.getCP(b) / inComp.getOP(a) - 1;
+
 					//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-					industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
+					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
 				}
 			}
