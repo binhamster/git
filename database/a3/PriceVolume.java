@@ -58,7 +58,7 @@ public class PriceVolume{
 		try {
 			mDate = sdf.parse(mainDate);
 			firstDate = sdf.parse(this.transDates.get(s));
-		} catch (ParseExeception ex){};
+		} catch (ParseException ex){};
 
 		if (this.transDates.contains(mainDate)) {
 			return transDates.indexOf(mainDate);
@@ -67,13 +67,13 @@ public class PriceVolume{
 				s = s + 5;
 				try {
 					firstDate = sdf.parse(this.transDates.get(s));
-				} catch (ParseExeception ex){};
+				} catch (ParseException ex){};
 			}
 			while(firstDate.before(mDate)) {
 				s--;
 				try {
 					firstDate = sdf.parse(this.transDates.get(s));
-				} catch (ParseExeception ex){};
+				} catch (ParseException ex){};
 			}
 		}
 		return s;
@@ -86,26 +86,26 @@ public class PriceVolume{
 		try {
 			mDate = sdf.parse(mainDate);
 			lastDate = sdf.parse(this.transDates.get(e));
-		} catch (ParseExeception ex){};
+		} catch (ParseException ex){};
 
 		if (this.transDates.contains(mainDate)) {
 			return transDates.indexOf(mainDate);
 		} else {
 			if (lastDate.before(mDate)) {
-				s = s - 5;
+				e = e - 5;
 				try {
-					lastDate = sdf.parse(this.transDates.get(s));
-				} catch (ParseExeception ex){};
+					lastDate = sdf.parse(this.transDates.get(e));
+				} catch (ParseException ex){};
 			} 
 
 			while(lastDate.after(mDate)) {
-				s++;
+				e++;
 				try {
-					lastDate = sdf.parse(this.transDates.get(s));
-				} catch (ParseExeception ex){};
+					lastDate = sdf.parse(this.transDates.get(e));
+				} catch (ParseException ex){};
 			}
 
 		}
-		return s;
+		return e;
 	}
 }
