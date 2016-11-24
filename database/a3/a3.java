@@ -110,12 +110,14 @@ public class a3 {
 			for (String inKey : basket.keySet()) {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
-					System.out.println("hello");
 					industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
+					System.out.println(inComp.getCP(s - 59));
+					System.out.println(inComp.getOP(s));
 					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
 				}
 				industryReturn = industryReturn * (1/6);
+				industryReturn = 0.0;
 				System.out.println(industryReturn);
 			}
 
