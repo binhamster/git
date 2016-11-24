@@ -20,7 +20,7 @@ public class PriceVolume{
 	}
 
 	public void setDate(String date){
-		(this.transDates).add(date);
+		(this.transDates).addFirst(date);
 	}
 
 	public String getDate(int i){
@@ -28,7 +28,7 @@ public class PriceVolume{
 	}
 
 	public void setOP(double p){
-		(this.openPrice).add(p);
+		(this.openPrice).addFirst(p);
 	}
 
 	public double getOP(int i){
@@ -36,7 +36,7 @@ public class PriceVolume{
 	}
 
 	public void setCP(double p){
-		(this.closePrice).add(p);
+		(this.closePrice).addFirst(p);
 	}
 
 	public double getCP(int i){

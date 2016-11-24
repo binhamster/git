@@ -107,22 +107,22 @@ public class a3 {
 			int s = aComp.indexOf(sDate);
 			int e = aComp.indexOf(eDate);
 
-			for (String inKey : basket.keySet()) {
-				if (!key.equals(inKey)) {
-					inComp = basket.get(inKey);
-					int a = inComp.getFirstDay(sDate, s);
-					int b = inComp.getLastDay(eDate, s-59);
-					System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
-					industryReturn = industryReturn + inComp.getCP(b) / inComp.getOP(a) - 1;
+			// for (String inKey : basket.keySet()) {
+			// 	if (!key.equals(inKey)) {
+			// 		inComp = basket.get(inKey);
+			// 		int a = inComp.getFirstDay(sDate, s);
+			// 		int b = inComp.getLastDay(eDate, s-59);
+			// 		System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
+			// 		industryReturn = industryReturn + inComp.getCP(b) / inComp.getOP(a) - 1;
 
-					//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
+			// 		//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
+			// 		//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
-				}
-			}
-			industryReturn = industryReturn * (1.0/6.0);
-			System.out.printf("%10.7f\n", industryReturn);
-			industryReturn = 0.0;
+			// 	}
+			// }
+			// industryReturn = industryReturn * (1.0/6.0);
+			// System.out.printf("%10.7f\n", industryReturn);
+			// industryReturn = 0.0;
 
 
 
@@ -134,6 +134,14 @@ public class a3 {
 			// 		aComp.getDate(i-59),
 			// 		tickerReturn);
 			// }
+			for (int i = s; i < e-(e+1)%60; i = i + 60){
+				tickerReturn = aComp.getCP(i+59) / aComp.getOP(i) - 1;
+				writer.printf("%s  %s  %s  %10.7f\n",
+					key,
+					aComp.getDate(i),
+					aComp.getDate(i+59),
+					tickerReturn);
+			}
 		}		
 		writer.close();
 
