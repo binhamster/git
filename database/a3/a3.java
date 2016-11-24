@@ -16,7 +16,7 @@ public class a3 {
 		ResultSet tickers;
 		String aTicker;
 		PriceVolume adjpv;
-		HashMap<String, PriceVolume> basket = new HashMap<String, PriceVolume>();
+		LinkedHashMap<String, PriceVolume> basket = new LinkedHashMap<String, PriceVolume>();
 
 		connectSQL("readerparams.txt");
 		connectSQL("writerparams.txt");
@@ -44,43 +44,86 @@ public class a3 {
 			"group by Ticker " +
 			"order by Ticker ASC");
 
-		while (industries.next()) {
-			anIndustry = industries.getString("Industry");
-			System.out.printf("%s: ", anIndustry);
+		// while (industries.next()) {
+		// 	anIndustry = industries.getString("Industry");
+		// 	System.out.printf("%s: \n", anIndustry);
 
-			getDates.setString(1, anIndustry);
-			dateRange = getDates.executeQuery();
-			dateRange.next();
-			sDate = dateRange.getString(1);
-			eDate = dateRange.getString(2); 
-			System.out.printf("%s - %s\n", sDate, eDate);
+		// 	getDates.setString(1, anIndustry);
+		// 	dateRange = getDates.executeQuery();
+		// 	dateRange.next();
+		// 	sDate = dateRange.getString(1);
+		// 	eDate = dateRange.getString(2); 
+		// 	System.out.printf("%s - %s\n", sDate, eDate);
 
-			getTickers.setString(1, anIndustry);
-			tickers = getTickers.executeQuery();
+		// 	getTickers.setString(1, anIndustry);
+		// 	tickers = getTickers.executeQuery();
 			
-			while (tickers.next()) {
-				aTicker = tickers.getString("Ticker");
-				System.out.printf("%s\n\r", aTicker);
-				adjpv = getAdjPV(aTicker);
-				basket.put(aTicker, adjpv);
-			}
+		// 	while (tickers.next()) {
+		// 		aTicker = tickers.getString("Ticker");
+		// 		System.out.printf("%s     \r", aTicker);
+		// 		adjpv = getAdjPV(aTicker);
+		// 		basket.put(aTicker, adjpv);
+		// 	}
+
+		// 	// int sDate = 1000000;
+		// 	// String sKey = null;
+		// 	// for (String key : basket.keySet()){
+		// 	// 	if (basket.get(key).getNumDays() < sDate) {
+		// 	// 		sDate = basket.get(key).getNumDays() - 1;
+		// 	// 		sKey = key;
+		// 	// 	}
+		// 	// }
+		// 	// System.out.printf("Start Date: %s\n", basket.get(sKey).getDate(sDate));
+		// 	// sDate = 1000000;
+		// }
+
+		getDates.setString(1, "Telecommunications Services");
+		dateRange = getDates.executeQuery();
+		dateRange.next();
+		sDate = dateRange.getString(1);
+		eDate = dateRange.getString(2);
+
+		getTickers.setString(1, "Telecommunications Services");
+		tickers = getTickers.executeQuery();
+
+		while (tickers.next()) {
+			aTicker = tickers.getString("Ticker");
+			adjpv = getAdjPV(aTicker);
+			basket.put(aTicker, adjpv);
 		}
 
-		// getDates.setString(1, "Telecommunications Services");
-		// dateRange = getDates.executeQuery();
-		// dateRange.next();
-		// sDate = dateRange.getString(1);
-		// eDate = dateRange.getString(2);
+		PrintWriter writer = null;
+		try{
+		    writer = new PrintWriter("tickerReturn", "UTF-8");
+		} catch (Exception e) {}
 
-		// getTickers.setString(1, "Telecommunications Services");
-		// tickers = getTickers.executeQuery();
+		PriceVolume aComp;
+		Double tickerReturn;
+		for (String key : basket.keySet()) {
+			System.out.println(key + ":");
+			aComp = basket.get(key);
+			int s = aComp.indexOf(sDate);
+			int e = aComp.indexOf(eDate);
 
-		// while (tickers.next()) {
-		// 	aTicker = tickers.getString("Ticker");
-		// 	pv = getPriVol(aTicker);
-		// 	adjpv = getAdjPV(pv);
-		// 	basket.put(aTicker, adjpv);
-		// }
+
+			// tickerReturn = aComp.getCP(s - 59) / aComp.getOP(s) - 1;
+			// System.out.printf("%10.7f\n", tickerReturn);
+			// tickerReturn = aComp.getCP(s - 59 - 60) / aComp.getOP(s - 60) - 1;
+			// System.out.printf("%10.7f\n", tickerReturn);
+
+
+
+			for (int i = s; i > s%60; i = i - 60){
+				tickerReturn = aComp.getCP(i-59) / aComp.getOP(i) - 1;
+				writer.printf("%s  %s  %s  %10.7f\n",
+					key,
+					aComp.getDate(i),
+					aComp.getDate(i-59),
+					tickerReturn);
+			}
+		}		
+		writer.close();
+
 
 
 
@@ -177,5 +220,6 @@ public class a3 {
 
 		return adjpv;
 	}
+
 
 }

@@ -62,7 +62,11 @@ public class PriceVolume{
 		return (this.closePrice).get(i);
 	}
 
-	public Integer getNumDays() {
+	public Integer getNumDays(){
 		return (this.transDates).size();
+	}
+
+	public Integer indexOf(String date){
+		return (this.transDates).indexOf(date);
 	}
 }
