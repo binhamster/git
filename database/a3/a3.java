@@ -134,14 +134,17 @@ public class a3 {
 			// 		aComp.getDate(i-59),
 			// 		tickerReturn);
 			// }
-			for (int i = s; i < e-(e+1)%60; i = i + 60){
-				tickerReturn = aComp.getCP(i+59) / aComp.getOP(i) - 1;
-				writer.printf("%s  %s  %s  %10.7f\n",
-					key,
-					aComp.getDate(i),
-					aComp.getDate(i+59),
-					tickerReturn);
-			}
+			System.out.println(e-(e+1)%60);
+			System.out.println(e-(e%60));
+			System.out.println(e);
+			// for (int i = s; i < e-(e+1)%60; i = i + 60){
+			// 	tickerReturn = aComp.getCP(i+59) / aComp.getOP(i) - 1;
+			// 	writer.printf("%s  %s  %s  %10.7f\n",
+			// 		key,
+			// 		aComp.getDate(i),
+			// 		aComp.getDate(i+59),
+			// 		tickerReturn);
+			// }
 		}		
 		writer.close();
 
