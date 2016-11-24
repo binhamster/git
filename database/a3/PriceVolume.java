@@ -51,26 +51,26 @@ public class PriceVolume{
 		return (this.transDates).indexOf(date);
 	}
 
-	public Integer getFirstDay(String mainDate, Integer s){
+	public Integer getFirstDay(String date, Integer s){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-		Date mDate = null;
+		Date mainDate = null;
 		Date firstDate = null;
 		try {
-			mDate = sdf.parse(mainDate);
+			mainDate = sdf.parse(date);
 			firstDate = sdf.parse(this.transDates.get(s));
 		} catch (ParseException ex){};
 
-		if (this.transDates.contains(mainDate)) {
-			return transDates.indexOf(mainDate);
+		if (this.transDates.contains(date)) {
+			return transDates.indexOf(date);
 		} else {
-			if (firstDate.after(mDate)) {
-				s = s + 5;
+			if (firstDate.after(mainDate)) {
+				s = s - 5;
 				try {
 					firstDate = sdf.parse(this.transDates.get(s));
 				} catch (ParseException ex){};
 			}
-			while(firstDate.before(mDate)) {
-				s--;
+			while(firstDate.before(mainDate)) {
+				s++;
 				try {
 					firstDate = sdf.parse(this.transDates.get(s));
 				} catch (ParseException ex){};
@@ -79,27 +79,27 @@ public class PriceVolume{
 		return s;
 	}
 
-	public Integer getLastDay(String mainDate, Integer e){
+	public Integer getLastDay(String date, Integer e){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-		Date mDate = null;
+		Date mainDate = null;
 		Date lastDate = null;
 		try {
-			mDate = sdf.parse(mainDate);
+			mainDate = sdf.parse(date);
 			lastDate = sdf.parse(this.transDates.get(e));
 		} catch (ParseException ex){};
 
-		if (this.transDates.contains(mainDate)) {
-			return transDates.indexOf(mainDate);
+		if (this.transDates.contains(date)) {
+			return transDates.indexOf(date);
 		} else {
-			if (lastDate.before(mDate)) {
-				e = e - 5;
+			if (lastDate.before(mainDate)) {
+				e = e + 5;
 				try {
 					lastDate = sdf.parse(this.transDates.get(e));
 				} catch (ParseException ex){};
 			} 
 
-			while(lastDate.after(mDate)) {
-				e++;
+			while(lastDate.after(mainDate)) {
+				e--;
 				try {
 					lastDate = sdf.parse(this.transDates.get(e));
 				} catch (ParseException ex){};
