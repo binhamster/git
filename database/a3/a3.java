@@ -115,7 +115,7 @@ public class a3 {
 					System.out.print(inComp.getDate(a) + " " + inComp.getDate(b) + " ");
 					System.out.print(sDate + " " + eDate + "\n");
 					//System.out.printf("a: %d b: %d slast: %d sfirst: %d\n", a,b,s-59,s);
-					industryReturn = industryReturn + inComp.getCP(b) / inComp.getOP(a) - 1;
+					industryReturn = industryReturn + ((inComp.getCP(b) / inComp.getOP(a)) - 1);
 
 					//industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
 					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
