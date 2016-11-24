@@ -69,4 +69,8 @@ public class PriceVolume{
 	public Integer indexOf(String date){
 		return (this.transDates).indexOf(date);
 	}
+
+	public Integer getFirstDay(Integer s){
+		return 0;
+	}
 }
