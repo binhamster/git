@@ -111,8 +111,7 @@ public class a3 {
 				if (!key.equals(inKey)) {
 					inComp = basket.get(inKey);
 					industryReturn = industryReturn + inComp.getCP(s - 59) / inComp.getOP(s) - 1;
-					System.out.println(inComp.getCP(s - 59));
-					System.out.println(inComp.getOP(s));
+					System.out.println(industryReturn);
 					//industryReturn = industryReturn + inComp.getCP(s - 59 - 60) / inComp.getOP(s - 60) - 1;
 
 				}
