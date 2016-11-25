@@ -133,6 +133,10 @@ public class a3 {
 			outComp = basket.get(outKey);
 			int s = outComp.indexOf(sDate);
 			int e = outComp.indexOf(eDate);
+			if (s == -1)
+				s = outComp.getFirstDay(sDate);
+			if (e == -1)
+				e = outComp.getLastDay(eDate);
 
 			for (int i = s; i < e - (e-s)%60; i = i + 60){
 				tickerReturn = outComp.getCP(i+59) / outComp.getOP(i) - 1;
