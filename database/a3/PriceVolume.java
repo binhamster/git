@@ -87,8 +87,10 @@ public class PriceVolume{
 		if (this.transDates.contains(date)) {
 			return transDates.indexOf(date);
 		} else {
+			System.out.println(i);
 			while(lastDate.after(mainDate)) {
 				i--;
+				System.out.println(i);
 				try {
 					lastDate = sdf.parse(this.transDates.get(i));
 				} catch (ParseException ex){};
