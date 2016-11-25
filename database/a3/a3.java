@@ -134,7 +134,7 @@ public class a3 {
 			int s = outComp.indexOf(sDate);
 			int e = outComp.indexOf(eDate);
 			if (s == -1)
-				s = outComp.getFirstDay(sDate);
+				System.out.println(outKey);
 			if (e == -1)
 				e = outComp.getLastDay(eDate);
 
